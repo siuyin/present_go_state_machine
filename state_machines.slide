@@ -1,0 +1,50 @@
+Finite State Machines
+in Go
+15 Jul 2017
+
+Loh Siu Yin
+Technology Consultant, Beyond Broadcast LLP
+siuyin@beyondbroadcast.com
+
+
+* Finite State Machines
+
+Input + Environment --> System --> Output
+
+* Simplified State Machine model for an Elevator:
+
+Start --[init]--> Stopped 
+Stopped --[UpBtnPushed]--> MovingUp 
+MovingUp --[TopLimit]--> Stopped
+Stopped --[DownBtnPushed]--> MovingDown
+MovingDown --[BottomLimit]--> Stopped
+
+The elevator's environment can be a weight sensor to detect if the maximum loading has been exceeded.
+
+Stopped -->[UpBtnPushed, LoadingExceeded]--> Stopped
+
+* Declare States for the Elevator
+
+.code states/main.go /010/,/020/
+
+* Function to sense (read) the Elevator's Environment
+
+.code states/main.go /030/,/040/
+
+* Computing the next state
+
+.code states/main.go /050/,/060/
+
+FirstTry is buggy because it did not consider its:
+
+- input 
+- environment
+
+* NextState Try 2
+
+.code states/main.go /070/,/080/
+
+* Testing
+
+  cd states
+  go test 
